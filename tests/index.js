@@ -95,6 +95,48 @@ describe('LIB: y-u-sync', function() {
 
       }
     );
+
+    it(
+      'should break the stack and call the callback if an error occurs',
+      function(done) {
+
+        var stepOne = sandbox.spy(function(param, callback) {
+          callback(null, param);
+        });
+
+        var stepTwo = sandbox.spy(function(param, callback) {
+          callback(null, param);
+        });
+
+        var error = new Error('Oh-Oh! Unexpected error');
+
+        var stepBroken = sandbox.spy(function(param, callback) {
+          callback(error);
+        });
+
+        var stepThree = sandbox.spy(function(param, callback) {
+          callback(null, param);
+        });
+
+        var operations = compose([
+          stepOne,
+          stepTwo,
+          stepBroken,
+          stepThree
+        ]);
+
+        operations('whatever param', function(err, result) {
+          expect(stepOne).to.have.been.calledOnce;
+          expect(stepTwo).to.have.been.calledOnce;
+          expect(stepBroken).to.have.been.calledOnce;
+          expect(stepThree).to.not.have.been.called;
+          expect(err).to.equal(error);
+          expect(result).to.be.undefined;
+          done();
+        });
+
+      }
+    );
   });
 
   describe('#generateFinalize(steps, callback)', function() {

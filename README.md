@@ -126,7 +126,7 @@ forEach(numbers, doubleAndSaveToDB, callback);
 
 ## Unit tests
 
-This module was TDD'ed. Almost 100% test coverage using mocha+chai+sinon.
+This module was TDD'ed. 100% test coverage using mocha+chai+sinon.
 Reading the tests is the best way to learn how this thing really works.
 
 ## Contributing
@@ -136,4 +136,5 @@ pull-request. Only PR's with tests will be considered.
 
 ## Releases
 
+* 0.0.2 Increases test coverage to 100%
 * 0.0.1 Initial release (extracted from private project)

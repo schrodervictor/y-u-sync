@@ -1,6 +1,6 @@
 {
   "name": "y-u-sync",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Y U Sync? A simple functional asynchronous library.",
   "repository" : {
     "type" : "git",
