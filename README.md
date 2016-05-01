@@ -20,7 +20,7 @@ your dependencies list or install it globally if you are one of those people.
 ## How to use it
 
 Take a look on the tests if you want a better insight of how thigs really
-work. It seems like black magic sometimes, but it's not
+work. It seems like black magic sometimes, but it's not.
 
 These are the currently available functionality:
 
@@ -31,7 +31,7 @@ returns a function that has the same signature of the first function of the
 stack and accepts a callback with the same signature expected by the last
 function of the stack.
 
-```
+```javascript
 // Given these asynchronous functions:
 
 function sumOne(number, callback) {
@@ -86,7 +86,7 @@ the error as the first parameter and the results collected so far. Note that,
 due to the asynchronous nature of this function, all the operations can still
 be executed.
 
-```
+```javascript
 // Given an array and an expensive asynchronous operation:
 
 var numbers = [10, 20, 30, 40, 50];
