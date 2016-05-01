@@ -1,7 +1,11 @@
 {
   "name": "y-u-sync",
   "version": "0.0.1",
-  "description": "Y U Sync? Use this simple functional asynchronous library.",
+  "description": "Y U Sync? A simple functional asynchronous library.",
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/schrodervictor/y-u-sync.git"
+  },
   "main": "index.js",
   "scripts": {
     "test": "node ./node_modules/.bin/mocha --recursive tests",
