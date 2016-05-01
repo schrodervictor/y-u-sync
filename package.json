@@ -1,0 +1,19 @@
+{
+  "name": "y-u-sync",
+  "version": "0.0.1",
+  "description": "Y U Sync? Use this simple functional asynchronous library.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ./node_modules/.bin/mocha --recursive tests",
+    "coverage": "node ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- --recursive tests"
+  },
+  "author": "Victor Schröder <schrodervictor@gmail.com> (https://github.com/schrodervictor)",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "3.5.0",
+    "istanbul": "0.4.3",
+    "mocha": "2.4.5",
+    "sinon": "1.17.3",
+    "sinon-chai": "2.8.0"
+  }
+}
