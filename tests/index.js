@@ -266,7 +266,7 @@ describe('LIB: y-u-sync', function() {
         // Forcing the operation to return in the reverse order
         var operation = sandbox.spy(function(element, callback) {
           var sumOne = function() { callback(null, element + 1); }
-          setTimeout(sumOne, 11 - element);
+          setTimeout(sumOne, 22 - element*2);
         });
 
         forEach(elements, operation, function(err, result) {
