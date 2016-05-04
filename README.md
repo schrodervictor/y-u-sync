@@ -124,6 +124,39 @@ var forEach = require('y-u-sync').forEach;
 forEach(numbers, doubleAndSaveToDB, callback);
 ```
 
+### forEachNoBreak(array, function, callback)
+
+Another version of the forEach mentioned above. The basic behavior is the same
+but with different reaction on errors. This one will calls the callback only
+after all operations finish, either successful or with errors. Differently
+from the previous forEach form, in case of any success or error, they will be
+collect in separated arrays and passed to the callback. Here is an example:
+
+```javascript
+var error5 = new Error('No fives allowed, sorry');
+var error9 = new Error('No nines allowed, sorry');
+
+function sumOne(param, callback) {
+  if (5 === param) return callback(error5);
+  if (9 === param) return callback(error9);
+  return callback(null, param + 1);
+}
+
+forEachNoBreak([1, 3, 5, 7, 9], sumOne, function(errors, results) {
+  // errors is [error5, error9]
+  // results is [2, 4, 8]
+});
+
+// Comparing with forEach
+forEach([1, 3, 5, 7, 9], sumOne, function(err, results) {
+  // err is error5 (the first to happen)
+  // results is [2, 4] (everything before the error)
+});
+```
+
+Both flavors exist because they attend different use cases. Choose your weapon
+wisely!
+
 ## Unit tests
 
 This module was TDD'ed. 100% test coverage using mocha+chai+sinon.
@@ -136,5 +169,12 @@ pull-request. Only PR's with tests will be considered.
 
 ## Releases
 
-* 0.0.2 Increases test coverage to 100%
-* 0.0.1 Initial release (extracted from private project)
+* 0.1.0:
+  * Changes the structure of the module
+  * Adds `forEachNoBreak`
+
+* 0.0.2:
+  * Increases test coverage to 100%
+
+* 0.0.1:
+  * Initial release (extracted from private project)
