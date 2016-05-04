@@ -137,6 +137,34 @@ describe('LIB: y-u-sync', function() {
 
       }
     );
+
+    it(
+      'should produce composite functions that are chainable as well',
+      function(done) {
+        var concatA = sandbox.spy(function(param, callback) {
+          callback(null, param + ' A');
+        });
+
+        var concatB = sandbox.spy(function(param, callback) {
+          callback(null, param + ' B');
+        });
+
+        var concatAB = compose([concatA, concatB]);
+
+        var concatBAB = compose([concatB, concatAB]);
+
+        var concatBABA = compose([concatBAB, concatA]);
+
+        concatBABA('test', function(err, result) {
+          expect(concatA).to.have.been.calledTwice;
+          expect(concatB).to.have.been.calledTwice;
+          expect(result).to.equal('test B A B A');
+          done();
+        });
+
+      }
+    );
+
   });
 
   describe('#generateFinalize(steps, callback)', function() {
