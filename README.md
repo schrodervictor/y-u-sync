@@ -169,6 +169,10 @@ pull-request. Only PR's with tests will be considered.
 
 ## Releases
 
+* 0.1.1:
+  * Bugfix: `forEach` and `forEachNoBreak` never call the callback in case the
+    array is empty. Now they call immediately.
+
 * 0.1.0:
   * Changes the structure of the module
   * Adds `forEachNoBreak`

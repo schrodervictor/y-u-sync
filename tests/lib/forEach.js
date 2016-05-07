@@ -75,6 +75,24 @@ describe('forEach', function() {
       }
     );
 
+    it(
+      'should call the callback immediately if the array is empty',
+      function(done) {
+
+        var sumOne = sandbox.spy(function(element, callback) {
+          callback(null, element + 1);
+        });
+
+        forEach([], sumOne, function(err, result) {
+          expect(err).to.be.not.ok;
+          expect(result).to.deep.equals([]);
+          expect(sumOne).to.not.have.been.called;
+          done();
+        });
+
+      }
+    );
+
   });
 
   describe('#forEachNoBreak(elements, operation, callback)', function() {
@@ -122,6 +140,24 @@ describe('forEach', function() {
           expect(err).to.deep.equals([error5, error9]);
           expect(result).to.deep.equals([2, 4, 8]);
           expect(sumOne).to.have.callCount(5);
+          done();
+        });
+
+      }
+    );
+
+    it(
+      'should call the callback immediately if the array is empty',
+      function(done) {
+
+        var sumOne = sandbox.spy(function(element, callback) {
+          callback(null, element + 1);
+        });
+
+        forEachNoBreak([], sumOne, function(err, result) {
+          expect(err).to.be.not.ok;
+          expect(result).to.deep.equals([]);
+          expect(sumOne).to.not.have.been.called;
           done();
         });
 
