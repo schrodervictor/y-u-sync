@@ -124,15 +124,26 @@ var forEach = require('y-u-sync').forEach;
 forEach(numbers, doubleAndSaveToDB, callback);
 ```
 
-### forEachNoBreak(array, function, callback)
+### Configuring forEach({breakOnError: true|false})
 
-Another version of the forEach mentioned above. The basic behavior is the same
-but with different reaction on errors. This one will calls the callback only
-after all operations finish, either successful or with errors. Differently
-from the previous forEach form, in case of any success or error, they will be
-collect in separated arrays and passed to the callback. Here is an example:
+The `forEach` function mentioned above can be configured to have a different
+behavior on errors. By default, `forEach` will break on the first error and
+call the callback. This might be useful to continue with the normal program
+flow, but can also be misleading, because the async operation will execute
+anyways for all the elements in the array. This is unavoidable due to the
+asynchronous nature of the function.
+
+To have better control of what failed or not, one can configure with the flag
+`{breakOnError: false}` to order the `forEach` function to collect all the
+errors that happened. In this case, a better error handling has to be kept in
+mind for the callback though (once a simple `if (!err)` won't work.
+but with different reaction on errors.
+
+Here is an example:
 
 ```javascript
+var forEach = require('y-u-sync').forEach({breakOnError: false});
+
 var error5 = new Error('No fives allowed, sorry');
 var error9 = new Error('No nines allowed, sorry');
 
@@ -142,10 +153,12 @@ function sumOne(param, callback) {
   return callback(null, param + 1);
 }
 
-forEachNoBreak([1, 3, 5, 7, 9], sumOne, function(errors, results) {
+forEach([1, 3, 5, 7, 9], sumOne, function(errors, results) {
   // errors is [error5, error9]
   // results is [2, 4, 8]
 });
+
+var forEach = require('y-u-sync').forEach({breakOnError: true});
 
 // Comparing with forEach
 forEach([1, 3, 5, 7, 9], sumOne, function(err, results) {
@@ -156,6 +169,14 @@ forEach([1, 3, 5, 7, 9], sumOne, function(err, results) {
 
 Both flavors exist because they attend different use cases. Choose your weapon
 wisely!
+
+The old reference to `forEachNoBreak` still exists, but it's usage is
+considered deprecated and is disencouraged as it will be removed in the
+future.
+
+`forEach` is exactly the same as `forEach({breakOnError: true})`
+`forEachNoBreak` is exactly the same as `forEach({breakOnError: false})`
+
 
 ## Unit tests
 
@@ -168,6 +189,12 @@ Fork the repo, create a branch, do awesome additions and submit a
 pull-request. Only PR's with tests will be considered.
 
 ## Releases
+
+* 0.2.0:
+  * Introduces possibility to configure the `forEach` function
+  * Deprecates `forEachNoBreak`
+  * Clean up in package.json
+  * Added CI with travis-ci.org
 
 * 0.1.1:
   * Bugfix: `forEach` and `forEachNoBreak` never call the callback in case the
